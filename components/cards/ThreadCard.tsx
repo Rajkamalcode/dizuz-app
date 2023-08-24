@@ -7,7 +7,7 @@ import sharelogo from '../../public/assets/share.svg'
 
 interface Props{
     id: string;
-    currentuserId: string;
+    currentUserId: string;
     parentId: string | null;
     content: string;
     author: {
@@ -32,7 +32,7 @@ interface Props{
 
 const ThreadCard=({
     id,
-    currentuserId,
+    currentUserId,
     parentId,
     content,
     author,

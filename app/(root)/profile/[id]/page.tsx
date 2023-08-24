@@ -6,11 +6,12 @@ import ProfileHeader from "../../../../components/shared/ProfileHeader";
 import { Tabs, TabsContent, TabsList, TabsTrigger} from '../../../../components/ui/tabs'
 import { profileTabs } from "../../../../constants";
 import Image from 'next/image'
+import ThreadsTab from "../../../../components/shared/ThreadsTab";
 async function Page({ params }: { params: { id: string } }) {
   const user = await currentUser();
-  if (!user) return null;
+  //if (!user) return null;
 
-  const userInfo = await fetchUser(user.id);
+  const userInfo = await fetchUser(params.id);
   if (!userInfo?.onboarded) redirect("/onboarding");
 
   return (
@@ -48,12 +49,15 @@ async function Page({ params }: { params: { id: string } }) {
 
           </TabsList>
           {profileTabs.map((tab)=>(
-            <TabsContent className="w-full text-light-1" key={`content-${tab.label}`} value="{tab.value}">
+                  <TabsContent
+                  key={`content-${tab.label}`}
+                  value={tab.value}
+                  className='w-full text-light-1'
+                >
                 <ThreadsTab 
                   currentUserId={user.id}
                   accountId={userInfo.id}
-                  accountType="User"
-                  
+                  accounttype='User'
                 />
 
             </TabsContent>
