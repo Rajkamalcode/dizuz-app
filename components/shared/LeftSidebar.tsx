@@ -5,21 +5,23 @@ import Image from 'next/image';
 
 import { sidebarLinks } from '../../constants';
 import { usePathname, useRouter} from 'next/navigation';
-import { SignOutButton,SignedIn } from '@clerk/nextjs';
+import { SignOutButton,SignedIn, useAuth } from '@clerk/nextjs';
 import { useUser } from '@clerk/nextjs';
 
 function LeftSidebar(){
     const router=useRouter();
     const pathname=usePathname();
     const isSignedIn = useUser()?.isSignedIn;
-
+    const { userId } = useAuth();
     return (
       <section className="custom-scrollbar leftsidebar">
         <div className="flex w-full flex-1 flex-col gap-6 px-6">
           {sidebarLinks.map((link)=>{
             const isActive=pathname.includes(link.route)|| pathname===link.route;
 
-            return(
+            if (link.route === "/profile") link.route = `${link.route}/${userId}`;
+
+             return(
             <div>
               <Link 
                 href={link.route}
